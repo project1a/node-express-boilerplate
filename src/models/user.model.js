@@ -6,10 +6,36 @@ const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
-    name: {
+    accountId: {
+      type: String,
+    },
+    appleId: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+    },
+    availabilities: {
+      type: Array
+    },
+    bookmarks: {
+      type: Array,
+    },
+    cardPayments: {
+      type: String
+    },
+    countryCode: {
+      type: String
+    },
+    currency: {
+      type: String
+    },
+    customerId: {
       type: String,
       required: true,
-      trim: true,
+    },
+    deepLink: {
+      type: String
     },
     email: {
       type: String,
@@ -23,26 +49,33 @@ const userSchema = mongoose.Schema(
         }
       },
     },
-    password: {
+    fcmTokens: {
+      type: Array
+    },
+    feedbackRequested: {
+      type: Boolean,
+      default: false,
+    },
+    googleId: {
       type: String,
-      required: true,
-      trim: true,
-      minlength: 8,
-      validate(value) {
-        if (!value.match(/\d/) || !value.match(/[a-zA-Z]/)) {
-          throw new Error('Password must contain at least one letter and one number');
-        }
-      },
-      private: true, // used by the toJSON plugin
+    },
+    locale: {
+      type: String,
     },
     role: {
       type: String,
       enum: roles,
       default: 'user',
     },
-    isEmailVerified: {
-      type: Boolean,
-      default: false,
+    tz: {
+      type: String,
+    },
+    transfers: {
+      type: String,
+    },
+    username: {
+      type: String,
+      required: true,
     },
   },
   {
