@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const { ValidationError } = require('sequelize');
 const httpStatus = require('http-status');
 const config = require('../config/config');
 const logger = require('../config/logger');
@@ -8,8 +8,13 @@ const errorConverter = (err, req, res, next) => {
   let error = err;
   if (!(error instanceof ApiError)) {
     const statusCode =
-      error.statusCode || error instanceof mongoose.Error ? httpStatus.BAD_REQUEST : httpStatus.INTERNAL_SERVER_ERROR;
-    const message = error.message || httpStatus[statusCode];
+      error.statusCode || error instanceof ValidationError ? httpStatus.BAD_REQUEST : httpStatus.INTERNAL_SERVER_ERROR;
+    let message = error.message || httpStatus[statusCode];
+
+    if (error instanceof ValidationError) {
+      if (error.errors && error.errors.length) message = error.errors.map((e) => e.message).join('#');
+    }
+
     error = new ApiError(statusCode, message, false, err.stack);
   }
   next(error);

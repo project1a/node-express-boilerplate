@@ -12,7 +12,7 @@ async function init() {
     .then(async () => {
       logger.info('Connected to Sequelize');
       await setupDatabase();
-      server = app.listen(config.port, () => {
+      server = app.listen(config.port, config.host, () => {
         logger.info(`Listening to port ${config.port}`);
       });
     })

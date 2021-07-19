@@ -8,6 +8,7 @@ const envVarsSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'test').required(),
     PORT: Joi.number().default(3000),
+    HOST: Joi.string().default('localhost'),
 
     DB_CONNECTION: Joi.string().required().description('DB connection'),
     DB_HOST: Joi.string().required().description('DB connection'),
@@ -42,6 +43,7 @@ if (error) {
 module.exports = {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
+  host: envVars.HOST,
   db: {
     // url: envVars.MONGODB_URL + (envVars.NODE_ENV === 'test' ? '-test' : ''),
     connection: envVars.DB_CONNECTION,

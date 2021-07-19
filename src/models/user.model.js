@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 const bcrypt = require('bcryptjs');
 const BaseModel = require('./base/BaseModel');
 const { roles } = require('../config/roles');
-const logger = require('../config/logger');
+// const logger = require('../config/logger');
 
 class User extends BaseModel {
   static init(sequelize) {
